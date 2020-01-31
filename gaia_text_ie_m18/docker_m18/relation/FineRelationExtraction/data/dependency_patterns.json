@@ -1,0 +1,306 @@
+{
+  "Physical.LocatedNear.Surround": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["acl"],
+
+        {
+          "token": ["surrounding", "surrounded", "all around", "на дежурство", "оточив", "в"]
+        }
+      ],
+
+      [
+        {
+          "token": ["surrounding", "surrounded", "all around", "на дежурство", "оточив", "в"]
+        },
+
+        ["obj"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Information.Color.Color": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["amod"],
+
+        {
+          "token": ["/home/whites5/AIDA/RelationExtraction/data/color_names.txt"]
+        }
+      ]
+    ],
+
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["amod"],
+
+        {
+          "token": ["/home/whites5/AIDA/RelationExtraction/data/color_names.txt"]
+        }
+      ],
+      [
+        {
+          "token": ["/home/whites5/AIDA/RelationExtraction/data/color_names.txt"]
+        },
+
+        ["conj"],
+
+        {
+          "token": ["/home/whites5/AIDA/RelationExtraction/data/color_names.txt"]
+        }
+      ]
+    ],
+
+    [
+      [
+        {
+          "token": ["/home/whites5/AIDA/RelationExtraction/data/color_names.txt"]
+        },
+
+        ["amod"],
+
+        {
+          "token": ["*"],
+          "pos": ["NOUN_NNS"]
+        }
+      ],
+      [
+        {
+          "token": ["*"],
+          "pos": ["NOUN_NNS"]
+        },
+
+        ["conj"],
+
+        {
+          "token": ["*"],
+          "pos": ["NOUN_NNS"]
+        }
+      ]
+    ]
+  ],
+
+  "Information.Make.Make": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["amod", "compound"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "PersonalSocial.Role.TitleFormOfAddress": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["compound"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Measurement.Size": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nummod", "nmod", "nsubj", "amod"],
+
+        {
+          "token": ["*"]
+        }
+      ],
+
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nsubj"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Measurement.Size.HeightLengthWidth": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nsubj"],
+
+        {
+          "token": ["*"]
+        }
+      ],
+
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nsubj"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Measurement.Size.Percentage": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nummod", "nmod", "nsubj"],
+
+        {
+          "token": ["*"]
+        }
+      ],
+
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nsubj"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Measurement.Size.Weight": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nummod", "nmod", "nsubj"],
+
+        {
+          "token": ["*"]
+        }
+      ],
+
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nsubj"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+   "Evaluate.Deliberateness.Accidental": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nnmod:poss", "obl", "nmod:on", "nmod:in"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Evaluate.Deliberateness.Deliberate": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nnmod:poss", "obl", "nmod:on", "nmod:in"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Evaluate.Legitimacy.Illegitimate": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nnmod:poss", "obl", "nmod:on", "nmod:in"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ],
+
+  "Evaluate.Legitimacy.Legitimate": [
+    [
+      [
+        {
+          "token": ["*"]
+        },
+
+        ["nmod", "nnmod:poss", "obl", "nmod:on", "nmod:in"],
+
+        {
+          "token": ["*"]
+        }
+      ]
+    ]
+  ]
+}

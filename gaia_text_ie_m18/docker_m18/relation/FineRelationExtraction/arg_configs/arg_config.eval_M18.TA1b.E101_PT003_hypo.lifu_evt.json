@@ -1,0 +1,49 @@
+{
+  "hierarchy_dir": "/nas/data/m1/panx2/workspace/kbp18/data/prepare/output/yago_taxonomy_wordnet_single_parent.json",
+  "rel_ont_fname": "/home/whites5/AIDA/RelationExtraction/utils/relation_ontology_arg_labels_constraints.v8.txt",
+  "depend_pattern_fname": "/home/whites5/AIDA/RelationExtraction/utils/dependency_patterns.json",
+  "outdir": "/nas/data/m1/whites5/AIDA/M18/eval/TA1b/results/E101_PT003/",
+  "rsd_vis_dir": "",
+
+  "outtag": {
+    "en_all": "Lifu"
+  },
+
+  "ltf_utils": {
+    "en_all": "/data/m1/lim22/aida2019/LDC2019E42/source/en_all"
+  },
+
+  "rsd_dirs": {
+    "en_all": "/data/m1/lim22/aida2019/LDC2019E42/source/en_all_rsd"
+  },
+
+  "cs_fnames": {
+    "en_all": [
+      "/nas/data/m1/lim22/aida2019/TA1b_eval/E101_PT003/en_all/edl/merged.cs",
+      "/nas/data/m1/whites5/AIDA/M18/eval/TA1b/results/E101_PT003/en_all/en_all.fillers.cs",
+      "/nas/data/m1/whites5/AIDA/M18/eval/TA1b/results/E101_PT003/en_all/en_all.old_format.fine_rel.Lifu.cs",
+      "/nas/data/m1/subbua/evaluation/visualizations/0627/rel/0710/cs_files/E101_PT003_en_all_hypo_rel_Lifu.cs",
+      "/data/m1/huangl7/AIDA/E101PT003_1/en.event.cs"
+    ]
+  },
+
+  "fine_ent_type_fnames": {
+    "en_all": "/nas/data/m1/panx2/tmp/aida/eval/2019/en/eval_0710_hypo/en.linking.freebase.fine.json"
+  },
+
+  "fine_ent_type_linking_fnames": {
+    "en_all": "/nas/data/m1/panx2/tmp/aida/eval/2019/en/eval_0710_hypo/en.linking.freebase.tab"
+  },
+
+  "dep_cfg": {
+    "en_all": {
+      "pos_rdr": "/data/m1/whites5/AIDA/DependencyParse/data/ud-treebanks-v2.3/UD_English-EWT/en_ewt-ud-train.conllx.pos.RDR",
+      "pos_dict": "/data/m1/whites5/AIDA/DependencyParse/data/ud-treebanks-v2.3/UD_English-EWT/en_ewt-ud-train.conllx.pos.DICT",
+      "model_path": "/data/m1/whites5/AIDA/DependencyParse/models/en",
+      "model_name": "biaffine.pt",
+      "use_gpu": true,
+      "decode_alg": "mst",
+      "reuse_cache": true
+    }
+  }
+}

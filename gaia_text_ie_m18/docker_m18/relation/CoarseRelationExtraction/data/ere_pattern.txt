@@ -1,0 +1,118 @@
+NO-RELATION(Arg-1,Arg-1)	PER , PER	0.9862637362637363
+NO-RELATION(Arg-1,Arg-1)	ORG , ORG	0.9761904761904762
+NO-RELATION(Arg-1,Arg-1)	PER or PER	0.9696969696969697
+NO-RELATION(Arg-1,Arg-1)	PER , the PER	0.96875
+NO-RELATION(Arg-1,Arg-1)	PER , a PER	0.9565217391304348
+NO-RELATION(Arg-1,Arg-1)	PER and PER	0.948339483394834
+NO-RELATION(Arg-1,Arg-1)	PER , and PER	0.9473684210526315
+NO-RELATION(Arg-1,Arg-1)	PER to PER	0.9285714285714286
+NO-RELATION(Arg-1,Arg-1)	PER got PER	0.9166666666666666
+NO-RELATION(Arg-1,Arg-1)	FAC and FAC	0.9090909090909091
+NO-RELATION(Arg-1,Arg-1)	PER , GPE	0.9047619047619048
+NO-RELATION(Arg-1,Arg-1)	PER and the PER	0.9047619047619048
+NO-RELATION(Arg-1,Arg-1)	PER know PER	0.9
+NO-RELATION(Arg-1,Arg-1)	PER and ORG	0.9
+NO-RELATION(Arg-1,Arg-1)	PER in PER	0.8888888888888888
+NO-RELATION(Arg-1,Arg-1)	LOC , PER	0.8888888888888888
+NO-RELATION(Arg-1,Arg-1)	ORG in ORG	0.875
+NO-RELATION(Arg-1,Arg-1)	GPE ( GPE	0.875
+NO-RELATION(Arg-1,Arg-1)	PER and a PER	0.875
+NO-RELATION(Arg-1,Arg-1)	ORG , PER	0.8620689655172413
+NO-RELATION(Arg-1,Arg-1)	PER ( PER	0.8571428571428571
+NO-RELATION(Arg-1,Arg-1)	GPE , FAC	0.8571428571428571
+NO-RELATION(Arg-1,Arg-1)	PER is PER	0.8571428571428571
+NO-RELATION(Arg-1,Arg-1)	PER have PER	0.8571428571428571
+NO-RELATION(Arg-1,Arg-1)	PER are GPE	0.8571428571428571
+NO-RELATION(Arg-1,Arg-1)	ORG , a ORG	0.8571428571428571
+NO-RELATION(Arg-1,Arg-1)	LOC where PER	0.8571428571428571
+NO-RELATION(Arg-1,Arg-1)	PER that PER	0.8484848484848485
+NO-RELATION(Arg-1,Arg-1)	PER of the PER	0.8382352941176471
+NO-RELATION(Arg-1,Arg-1)	PER of my PER	0.8333333333333334
+NO-RELATION(Arg-1,Arg-1)	PER the PER	0.8333333333333334
+NO-RELATION(Arg-1,Arg-1)	GPE ( ORG	0.8333333333333334
+NO-RELATION(Arg-1,Arg-1)	ORG  LOC	0.8181818181818182
+NO-RELATION(Arg-1,Arg-1)	GPE , PER	0.8163265306122449
+NO-RELATION(Arg-1,Arg-1)	PER for PER	0.8095238095238095
+NO-RELATION(Arg-1,Arg-1)	PER , a ORG	0.8
+NO-RELATION(Arg-1,Arg-1)	PER were PER	0.8
+NO-RELATION(Arg-1,Arg-1)	PER , a GPE	0.8
+NO-RELATION(Arg-1,Arg-1)	PER with PER	0.8
+NO-RELATION(Arg-1,Arg-1)	PER for GPE	0.8
+NO-RELATION(Arg-1,Arg-1)	PER said GPE	0.8
+NO-RELATION(Arg-1,Arg-1)	GPE / GPE	0.7777777777777778
+NO-RELATION(Arg-1,Arg-1)	PER had PER	0.7692307692307693
+NO-RELATION(Arg-1,Arg-1)	GPE of GPE	0.7555555555555555
+NO-RELATION(Arg-1,Arg-1)	GPE , GPE	0.7544910179640718
+NO-RELATION(Arg-1,Arg-1)	LOC , GPE	0.75
+NO-RELATION(Arg-1,Arg-1)	FAC for PER	0.75
+NO-RELATION(Arg-1,Arg-1)	GPE , the GPE	0.75
+NO-RELATION(Arg-1,Arg-1)	PER of PER	0.7261904761904762
+NO-RELATION(Arg-1,Arg-1)	FAC where PER	0.7142857142857143
+physical_locatednear(Arg-1,Arg-2)	LOC of the LOC	0.9090909090909091
+physical_locatednear(Arg-1,Arg-2)	LOC of the GPE	0.9090909090909091
+physical_locatednear(Arg-1,Arg-2)	PER at the FAC	0.875
+physical_locatednear(Arg-1,Arg-2)	PER on the LOC	0.8571428571428571
+physical_locatednear(Arg-1,Arg-2)	PER was GPE	0.8571428571428571
+physical_locatednear(Arg-1,Arg-2)	PER at FAC	0.8333333333333334
+physical_locatednear(Arg-1,Arg-2)	PER to the FAC	0.8333333333333334
+physical_locatednear(Arg-1,Arg-2)	PER out of GPE	0.8333333333333334
+physical_locatednear(Arg-1,Arg-2)	FAC  LOC	0.8333333333333334
+physical_locatednear(Arg-1,Arg-2)	FAC in GPE	0.8113207547169812
+physical_locatednear(Arg-1,Arg-2)	FAC in the GPE	0.8
+physical_locatednear(Arg-1,Arg-2)	FAC in the LOC	0.8
+physical_locatednear(Arg-1,Arg-2)	PER was FAC	0.8
+physical_locatednear(Arg-1,Arg-2)	LOC of GPE	0.7916666666666666
+physical_locatednear(Arg-1,Arg-2)	LOC in GPE	0.7857142857142857
+partwhole_subsidiary(Arg-2,Arg-1)	GPE . ORG	0.9583333333333334
+partwhole_subsidiary(Arg-2,Arg-1)	GPE ' s ORG	0.7142857142857143
+orgaffiliation_leadership(Arg-2,Arg-1)	ORG Minister PER	0.6666666666666666
+orgaffiliation_leadership(Arg-2,Arg-1)	GPE president PER	0.8
+orgaffiliation_leadership(Arg-2,Arg-1)	GPE prime PER	0.875
+orgaffiliation_leadership(Arg-2,Arg-1)	GPE Prime Minister PER	0.8
+orgaffiliation_employmentmembership(Arg-2,Arg-1)	GPE Prime PER	0.625
+orgaffiliation_leadership(Arg-1,Arg-2)	PER ’ s ORG	0.6363636363636364
+orgaffiliation_leadership(Arg-2,Arg-1)	GPE President PER	0.68148148148148145
+orgaffiliation_leadership(Arg-2,Arg-1)	GPE Prime Minister PER	0.68
+orgaffiliation_leadership(Arg-1,Arg-2)	leader of ORG	0.6363636363636364
+orgaffiliation_leadership(Arg-2,Arg-1)	ORG chief	0.6363636363636364
+orgaffiliation_employmentmembership(Arg-2,Arg-1)	GPE . PER	0.9666666666666667
+orgaffiliation_employmentmembership(Arg-2,Arg-1)	ORG ' s PER	0.9583333333333334
+orgaffiliation_employmentmembership(Arg-2,Arg-1)	ORG . PER	0.95
+orgaffiliation_employmentmembership(Arg-2,Arg-1)	GPE security PER	0.625
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER for the ORG	0.8571428571428571
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER from the ORG	0.8333333333333334
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER at the ORG	0.8333333333333334
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER for ORG	0.8333333333333334
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER of the ORG	0.6876712328767123
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER in ORG	0.7142857142857143
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER at ORG	0.6428571428571429
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER of ORG	0.5949367088607594
+orgaffiliation_employmentmembership(Arg-1,Arg-2)	PER in the ORG	0.5555555555555556
+personalsocial_family(Arg-2,Arg-1)	PER two PER	0.8888888888888888
+personalsocial_family(Arg-2,Arg-1)	PER have a PER	0.8571428571428571
+personalsocial_family(Arg-2,Arg-1)	PER of a PER	0.8
+personalsocial_family(Arg-2,Arg-1)	PER ' PER	0.8
+personalsocial_family(Arg-2,Arg-1)	PER ' s PER	0.7407407407407407
+personalsocial_family(Arg-2,Arg-1)	PER loved PER	0.6666666666666666
+personalsocial_family(Arg-2,Arg-1)	PER new PER	0.6666666666666666
+physical_resident(Arg-1,Arg-2)	PER lived in GPE	0.4
+generalaffiliation_more(Arg-2,Arg-1)	GPE ' s PER	0.5714285714285714
+physical_orglocationorigin(Arg-1,Arg-2)	ORG in the GPE	0.8095238095238095
+physical_orglocationorigin(Arg-1,Arg-2)	ORG in LOC	0.8
+physical_orglocationorigin(Arg-1,Arg-2)	ORG in GPE	0.7627118644067796
+physical_orglocationorigin(Arg-2,Arg-1)	GPE ORG	0.7627118644067796
+generalaffiliation_more(Arg-1,Arg-2)	PER home GPE	0.8571428571428571
+generalaffiliation_more(Arg-1,Arg-2)	PER ' m from GPE	0.8
+generalaffiliation_more(Arg-1,Arg-2)	PER ' m in GPE	0.6666666666666666
+generalaffiliation_more(Arg-1,Arg-2)	PER from GPE	0.5909090909090909
+personalsocial_business(Arg-2,Arg-1)	PER political PER	0.6666666666666666
+partwhole_subsidiary(Arg-1,Arg-2)	ORG of the ORG	0.625
+partwhole_subsidiary(Arg-1,Arg-2)	ORG of ORG	0.5625
+personalsocial_unspecified(Arg-2,Arg-1)	PER best PER	0.8
+generalaffiliation_apora(Arg-2,Arg-1)	ORG  FAC	0.9629629629629629
+generalaffiliation_apora(Arg-2,Arg-1)	GPE . VEH	0.8571428571428571
+generalaffiliation_apora(Arg-2,Arg-1)	PER  VEH	0.84
+generalaffiliation_apora(Arg-2,Arg-1)	ORG  VEH	0.8333333333333334
+generalaffiliation_apora(Arg-2,Arg-1)	PER ' s FAC	0.8181818181818182
+generalaffiliation_apora(Arg-2,Arg-1)	GPE  VEH	0.6956521739130435
+generalaffiliation_apora(Arg-2,Arg-1)	GPE FAC	0.8571428571428571

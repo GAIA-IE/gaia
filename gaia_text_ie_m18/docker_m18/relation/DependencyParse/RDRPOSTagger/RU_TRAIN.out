@@ -1,0 +1,2 @@
+nohup: ignoring input
+Trained model location: ('/data/m1/whites5/AIDA/DependencyParse/data/ud-treebanks-v2.3/UD_Russian-SynTagRus/ru_syntagrus-ud-train.conllx.pos.RDR', '/data/m1/whites5/AIDA/DependencyParse/data/ud-treebanks-v2.3/UD_Russian-SynTagRus/ru_syntagrus-ud-train.conllx.pos.DICT')
