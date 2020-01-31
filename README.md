@@ -1,13 +1,12 @@
-# GAIA: A Cross-media Fine-grained Knowledge Extraction System for Multimedia News Recommendation
+# GAIA: A Cross-media Fine-grained Knowledge Extraction System
 
-[GAIA: A Cross-media Fine-grained Knowledge Extraction System for Multimedia News Recommendation]() 
+[GAIA: A Cross-media Fine-grained Knowledge Extraction System]() 
 
 Table of Contents
 =================
   * [Overview](#overview)
   * [Requirements](#requirements)
   * [Quickstart](#quickstart)
-  * [Citation](#citation)
 
 ## Overview
 <p align="center">
@@ -86,12 +85,3 @@ Grounding.ipynb
 Merge.ipynb
 ```
 
-## Citation
-```
-@InProceedings{ligaia:19,
-    author  = {Manling Li and Ying Lin and Ananya Subburathinam and Spencer Whitehead and Xiaoman Pan and Di Lu and Qingyun Wang and Tongtao Zhang and Lifu Huang and Heng Ji and Alireza Zareian and Hassan Akbari and Brian Chen and Bo Wu and Emily Allaway and Shih-Fu Chang and Kathleen McKeown and Yixiang Yao and Jennifer Chen and Eric Berquist and Kexuan Sun and Xujun Peng and Ryan Gabbard and Marjorie Freedman and Pedro Szekely and T.K. Satish Kumar and Arka Sadhu and Ram Nevatia and Miguel Rodriguez and Yifan Wang and Yang Bai and Ali Sadeghian and Daisy Zhe Wang},
-    title   = {GAIA at SM-KBP 2019 - A Multi-media Multi-lingual Knowledge Extraction and Hypothesis Generation System},
-    booktitle = "Proceedings of TAC KBP 2019, the 26th International Conference on Computational Linguistics: Technical Papers",
-    year    = "2019"
-}
-```
