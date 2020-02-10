@@ -5,8 +5,8 @@
 ######################################################
 lang="en"
 # input root path
-data_root=data/testdata/${lang}_small
-#data_root=$1
+#data_root=data/testdata/${lang}_small
+data_root=$1
 parent_child_tab_path=$2
 raw_id_column=$3
 rename_id_column=$4
@@ -60,45 +60,49 @@ event_corefer=${event_result_dir}/events_corefer.cs
 # final output
 final_output_file=${data_root}/${lang}_full.cs
 
-## EDL
+# EDL
 echo "** Extracting entities **"
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_edl/edl.py \
+    ./system/aida_edl/edl.py \
     ${ltf_source} ${rsd_source} ${lang} ${edl_output_dir} \
     ${edl_bio} ${edl_tab_nam} ${edl_tab_nom} ${edl_tab_pro} \
     ${entity_fine_model}
-## linking
+# linking
 echo "** Linking entities to KB **"
-link_dir=edl_data/test
-mkdir -p ${PWD}/${link_dir}/input
-cp -r ${edl_output_dir}/* ${PWD}/${link_dir}/input/
-docker run --user "$(id -u):$(id -g)" --rm -v ${PWD}/edl_data:/data  --link db:mongo panx27/edl \
+link_dir=system/aida_edl/edl_data/test
+docker run -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
+    mkdir -p ${link_dir}/input
+docker run -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
+    cp -r ${edl_output_dir}/* ${link_dir}/input/
+docker run -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
+    ls ${link_dir}/input
+docker run -v ${PWD}/system/aida_edl/edl_data:/data --link db:mongo panx27/edl \
     python ./projs/docker_aida19/aida19.py \
     ${lang} /data/test/input /data/test/output
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
+docker run -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
     cp ${link_dir}/output/* ${edl_output_dir}/
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
+docker run -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
     rm -rf ${link_dir}
-## nominal coreference
+# nominal coreference
 echo "** Starting nominal coreference **"
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_edl/nominal_corefer_en.py \
+    ./system/aida_edl/nominal_corefer_en.py \
     --dev ${edl_bio} \
     --dev_e ${edl_tab_link} \
     --dev_f ${edl_tab_link_fb} \
     --out_e ${edl_tab_final} \
     --use_nominal_corefer ${use_nominal_corefer}
-## tab2cs
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd`  -i -t limanling/uiuc_ie_m18 \
+# tab2cs
+docker run --rm -v `pwd`:`pwd` -w `pwd`  -i -t limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_edl/tab2cs.py \
+    ./system/aida_edl/tab2cs.py \
     ${edl_tab_final} ${edl_cs_coarse} 'EDL'
 
-## Relation Extraction (coarse)
+# Relation Extraction (coarse)
 echo "** Extraction relations **"
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
     /opt/conda/envs/aida_relation_coarse/bin/python \
     -u /relation/CoarseRelationExtraction/exec_relation_extraction.py \
     -i ${lang} \
@@ -109,37 +113,40 @@ docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t limanli
     -o ${relation_cs_coarse}
 
 
-## Filler Extraction & new relation
+# Filler Extraction & new relation
 echo "** Extraction fillers **"
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_filler/nlp_utils.py \
+    ./system/aida_filler/nlp_utils.py \
     --rsd_list ${rsd_file_list} --corenlp_dir ${core_nlp_output_path}
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_filler/filler_generate.py \
+    ./system/aida_filler/filler_generate.py \
     --corenlp_dir ${core_nlp_output_path} \
     --edl_path ${edl_cs_coarse} \
     --text_dir ${rsd_source} \
     --filler_path ${filler_coarse}  \
     --relation_path ${new_relation_coarse} \
-    --units_path ./aida_pipeline_m18/aida_filler/units_clean.txt
+    --units_path ./system/aida_filler/units_clean.txt
 
 # Fine-grained Entity
 echo "** Fine-grained entity typing **"
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_edl/fine_grained_entity.py \
+    ./system/aida_edl/fine_grained_entity.py \
     ${lang} ${edl_json_fine} ${edl_tab_freebase} ${entity_fine_model} \
     ${edl_cs_coarse} ${edl_cs_fine} ${filler_fine} \
     --filler_coarse ${filler_coarse}
-cat ${edl_cs_fine} ${filler_fine} > ${edl_cs_fine_all}
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
+    /opt/conda/envs/py36/bin/python \
+    ./system/aida_utilities/pipeline_merge_m18.py \
+    -e ${edl_cs_fine} -f ${filler_fine} -o ${edl_cs_fine_all}
 
 # Event (Coarse)
 echo "** Extracting events **"
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_event/gail_event_test.py \
+    ./system/aida_event/gail_event_test.py \
     -l ${ltf_file_list} \
     -f ${ltf_source} \
     -e ${edl_cs_coarse} \
@@ -147,14 +154,14 @@ docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --netwo
     -i ${filler_coarse} \
     -o ${event_coarse_with_time}
 
-## Relation Extraction (fine)
+# Relation Extraction (fine)
 docker run -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
     -u /relation/FineRelationExtraction/EVALfine_grained_relations.py \
     --lang_id ${lang} \
     --ltf_dir ${ltf_source} \
     --rsd_dir ${rsd_source} \
-    --cs_fnames ${edl_cs_coarse} ${filler_coarse} ${relation_cs_coarse} \
+    --cs_fnames ${edl_cs_coarse} ${filler_coarse} ${relation_cs_coarse} ${new_relation_coarse} \
     --fine_ent_type_tab ${edl_tab_freebase} \
     --fine_ent_type_json ${edl_json_fine} \
     --outdir ${relation_result_dir} \
@@ -165,9 +172,9 @@ docker run -v `pwd`:`pwd` -w `pwd` -i -t limanling/uiuc_ie_m18 \
 
 # Event (Fine-grained)
 echo "** Event fine-grained typing **"
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_event/fine_grained/fine_grained_events.py \
+    ./system/aida_event/fine_grained/fine_grained_events.py \
     ${lang} ${ltf_source} ${edl_json_fine} ${edl_tab_freebase} \
     ${edl_cs_coarse} ${event_coarse_with_time} ${event_fine} \
     --filler_coarse ${filler_coarse} \
@@ -175,15 +182,19 @@ docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --netwo
 
 
 # Event coreference
-docker run --user "$(id -u):$(id -g)" --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
+docker run --rm -v `pwd`:`pwd` -w `pwd` -i -t --network="host" limanling/uiuc_ie_m18 \
     /opt/conda/envs/py36/bin/python \
-    ./aida_pipeline_m18/aida_event_coreference/gail_event_coreference_test_en.py \
+    ./system/aida_event_coreference/gail_event_coreference_test_en.py \
     -i ${event_fine} -o ${event_corefer} -r ${rsd_source}
 
-### Final Merge
-#echo "Merging all items"
-#docker run -it --rm -v ${PWD}:/tmp -w /tmp charlesztt/aida_event \
-#python aida_utilities/pipeline_merge.py -e ${entity_fine} -f ${filler_fine} -r ${relation_result_dir}/${relation_cs_name} -n ${new_relation_output_path} -v ${event_result_file_corefer} -o ${final_output_file}
-#
-#echo "Final result in Cold Start Format is in "${data_root}"/en_full.cs"
+# Final Merge
+echo "Merging all items"
+docker run -it --rm -v `pwd`:`pwd` -w `pwd` limanling/uiuc_ie_m18 \
+    python aida_utilities/pipeline_merge_m18.py \
+    -e ${edl_cs_fine} -f ${filler_fine} \
+    -r ${relation_cs_fine} \
+    -v ${event_corefer} \
+    -o ${final_output_file}
+
+echo "Final result in Cold Start Format is in "${data_root}"/en_full.cs"
 
