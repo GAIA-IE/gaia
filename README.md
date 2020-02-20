@@ -33,7 +33,7 @@ pip install -r gaia_grounding_merging-master/requirements.txt
 One single script to run text information extraction, including entity extraction, relation extraction and event extraction.
 
 ```bash
-sh pipeline_sample.sh ${data_root}
+sh gaia_text_ie_m18/pipeline_sample.sh ${data_root}
 ```
 
 Example files are in `gaia_text_ie_m18/data/testdata`.
