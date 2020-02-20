@@ -21,6 +21,13 @@ Table of Contents
 You can install the environment using `requirements.txt` for each component.
 
 ```pip
+docker pull mongo
+docker pull panx27/edl
+docker pull limanling/uiuc_ie_m18
+docker pull charlesztt/aida_event
+docker pull dylandilu/event_coreference_xdoc
+docker pull wangqy96/aida_nominal_coreference_en
+docker pull frnkenstien/corenlp
 pip install -r gaia_object_detection-master/requirements.txt
 pip install -r gaia_face_building-master/requirements.txt
 pip install -r gaia_grounding_merging-master/requirements.txt
