@@ -41,10 +41,10 @@ Example files are in `gaia_text_ie_m18/data/testdata`.
 ### Visual Entity Extraction
 
 ```
-python tfobjdetect/ipynb/deployment/deploy_037a(b/c/d/e)
-python wsod/ipynb/deploy/dpl_034a(b)
-python model_fusion/ipynb/fusion/fuse_034a(b)
-python model_fusion/ipynb/export/ex_034
+python gaia_object_detection-master/tfobjdetect/ipynb/deployment/deploy_037a(b/c/d/e)
+python gaia_object_detection-master/wsod/ipynb/deploy/dpl_034a(b)
+python gaia_object_detection-master/model_fusion/ipynb/fusion/fuse_034a(b)
+python gaia_object_detection-master/model_fusion/ipynb/export/ex_034
 ```
 
 ### Visual Entity Linking and Coreference
