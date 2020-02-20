@@ -57,13 +57,13 @@ python gaia_object_detection-master/model_fusion/ipynb/export/ex_034
 ### Visual Entity Linking and Coreference
 
 ```
-CUDA_VISIBLE_DEVICES=0 python gaia_face_building-master/src/align/align_dataset_mtcnn.py \
+python gaia_face_building-master/src/align/align_dataset_mtcnn.py \
 [input directory of img or key frames] \
 datasets/[output dir] \
 --image_size 160 \
 --margin 32
 
-CUDA_VISIBLE_DEVICES=0 python gaia_face_building-master/src/classifier.py CLASSIFY \ 
+python gaia_face_building-master/src/classifier.py CLASSIFY \ 
 datasets/[1.1 output directory] \
 models/facenet/20180402-114759/20180402-114759.pb \
 models/google500_2_classifier.pkl \
@@ -72,7 +72,7 @@ models/google500_2_classifier.pkl \
 
 python gaia_face_building-master/src/bbox.py [1.1 output directory] [bbox pickle name]
 
-CUDA_VISIBLE_DEVICES=0 python gaia_face_building-master/extract_features.py \
+python gaia_face_building-master/extract_features.py \
   --config_path delf_config_example.pbtxt \
   --list_images_path [path to the building_list.txt created by obj_preprocess.ipynb] /building_list.txt \
   --output_dir [output feature directory]
