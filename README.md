@@ -1,7 +1,5 @@
 # GAIA: A Cross-media Fine-grained Knowledge Extraction System
 
-[GAIA: A Cross-media Fine-grained Knowledge Extraction System]() 
-
 Table of Contents
 =================
   * [Overview](#overview)
