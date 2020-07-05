@@ -1,6 +1,6 @@
 # GAIA: A Cross-media Fine-grained Knowledge Extraction System
 
-Latest version is in [UIUC-Text-IE-FINEGRAINED](https://github.com/limanling/uiuc_ie_pipeline_fine_grained)(TextIE) and [GAIA-AIDA](https://github.com/GAIA-AIDA)(VisionIE).
+Latest version is in [UIUC-Text-IE](https://github.com/limanling/uiuc_ie_pipeline_fine_grained)(TextIE) and [GAIA-AIDA](https://github.com/GAIA-AIDA)(VisionIE).
 
 Table of Contents
 =================
