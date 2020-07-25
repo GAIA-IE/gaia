@@ -15,27 +15,25 @@ Table of Contents
 
 ## Requirements
 
-#### Environment
-
 - Docker
 
-#### Pacakges
+## Resources
 
-##### Dockerhub
+### Dockerhub
 https://hub.docker.com/u/gaiaaida
 
-##### Github Repositories
+### Github Repositories
 
-### Text Pipeline
+- Text Pipeline
 https://github.com/GAIA-AIDA/uiuc_ie_pipeline_fine_grained
 
-### Object Detection
+- Object Detection
 https://github.com/GAIA-AIDA/object-detection
 
-### Face & Building Identification
+- Face & Building Identification
 https://github.com/GAIA-AIDA/face-building
 
-### Grounding & Merging
+- Grounding & Merging
 https://github.com/GAIA-AIDA/grounding-merging
 
 ## Quickstart
