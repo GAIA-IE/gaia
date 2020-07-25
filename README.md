@@ -201,7 +201,7 @@ $ sh ./full_script.sh
 - Running Details: Please find running instructions in https://github.com/GAIA-AIDA/grounding-merging
 
 ### Text and Visual IE Result Merging
-- Task: Final merge of TA1
+- Task: Final merge
 - Details here: https://github.com/isi-vista/aida-tools#cleaning-kbs-cleankb-jvm
 - Input: (1) merged KB from `CU Graph Merging` 
 - Output: final ttl
