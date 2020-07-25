@@ -19,7 +19,7 @@ Table of Contents
 
 ## Resources
 
-### Dockerhub
+### Dockerhub Repositories
 https://hub.docker.com/u/gaiaaida
 
 ### Github Repositories
@@ -40,7 +40,7 @@ https://github.com/GAIA-AIDA/grounding-merging
 
 ### UIUC Text IE Pipeline
 - Task: Entity Extraction, Relation Extraction, Event Extraction
-- Source: https://github.com/limanling/uiuc_ie_pipeline_fine_grained
+- Source: https://github.com/GAIA-AIDA/uiuc_ie_pipeline_fine_grained
 - Input: (1) text data, including `ltf` and `rsd` source files. (2) `parent_child_tab` is a meta data file containing columns `child_uid` and `parent_uid` storing file name, content_date storing publication date, and example file is testdata_dryrun/parent_children.sorted.tab. (3) `en_asr_path`, `en_ocr_path` and `ru_ocr_path` are generated from ASR and OCR system using docker `gaiaaida/asr` from DockerHub. Example files are in `data/asr.english` and `data/video.ocr`.
 - Output: 
    - extraction result in cold start format
