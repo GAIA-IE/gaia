@@ -1,5 +1,0 @@
-# Add user to ssh agent to allow git pull
-$ eval "$(ssh-agent -s)"; ssh-add ~/.ssh/whatever_is_your_id_rsa 
-
-# Path video shot boundaries
-$ ls /nfs/isicvlnas01/projects/AIDA/2019-05-dryrun/dryrun/data/video_shot_boundaries

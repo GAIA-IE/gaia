@@ -1,5 +1,0 @@
-numpy 
-six.moves.urllib 
-tarfile
-tensorflow 
-zipfile

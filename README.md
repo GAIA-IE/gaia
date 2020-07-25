@@ -20,75 +20,406 @@ Table of Contents
 - Docker
 
 #### Pacakges
-You can install the environment using `requirements.txt` for each component.
 
-```pip
-docker pull mongo
-docker pull panx27/edl
-docker pull limanling/uiuc_ie_m18
-docker pull charlesztt/aida_event
-docker pull dylandilu/event_coreference_xdoc
-docker pull wangqy96/aida_nominal_coreference_en
-docker pull frnkenstien/corenlp
-pip install -r gaia_object_detection-master/requirements.txt
-pip install -r gaia_face_building-master/requirements.txt
-pip install -r gaia_grounding_merging-master/requirements.txt
-```
+##### Dockerhub
+https://hub.docker.com/u/gaiaaida
+
+##### Github Repositories
+
+### Text Pipeline
+https://github.com/GAIA-AIDA/uiuc_ie_pipeline_fine_grained
+
+### Object Detection
+https://github.com/GAIA-AIDA/object-detection
+
+### Face & Building Identification
+https://github.com/GAIA-AIDA/face-building
+
+### Grounding & Merging
+https://github.com/GAIA-AIDA/grounding-merging
 
 ## Quickstart
 
-### Textual Entity Extraction and Linking, Relation Extraction, Event Extraction and corefernece
+### UIUC Text IE Pipeline
+- Task: Entity Extraction, Relation Extraction, Event Extraction
+- Source: https://github.com/limanling/uiuc_ie_pipeline_fine_grained
+- Input: (1) text data, including `ltf` and `rsd` source files. (2) `parent_child_tab` is a meta data file containing columns `child_uid` and `parent_uid` storing file name, content_date storing publication date, and example file is testdata_dryrun/parent_children.sorted.tab. (3) `en_asr_path`, `en_ocr_path` and `ru_ocr_path` are generated from ASR and OCR system using docker `gaiaaida/asr` from DockerHub. Example files are in `data/asr.english` and `data/video.ocr`.
+- Output: 
+   - extraction result in cold start format
+      - <output_dir>/en/en_full_link.cs
+      - <output_dir>/ru/ru_full_link.cs
+      - <output_dir>/uk/uk_full_link.cs
+   - extraction result in AIF format
+      - <output_dir>/kb/ttl
+- Docker:
+```
+sh pipeline_sample_full.sh ${data_root_ltf} ${data_root_rsd} ${output_dir} ${parent_child_tab} ${en_asr_path} ${en_ocr_path} ${ru_ocr_path}
+```
+If you do not have parent_child_tab, en_asr_path, en_ocr_path and ru_ocr_path, please use None. Please find details in https://github.com/limanling/uiuc_ie_pipeline_fine_grained.
 
-One single script to run text information extraction, including entity extraction, relation extraction and event extraction.
-
-```bash
-sh gaia_text_ie_m18/pipeline_sample.sh ${data_root}
+### Columbia University Vision Pipeline
+- Task: Object Detection, Face/Flag/Landmark Recognition, Visual Grounding, Instance Matching, Multimodal Event Graph Merging (Vision and Text)
+- Source: https://github.com/GAIA-AIDA/grounding-merging
+- [Pipline Overview](https://github.com/GAIA-AIDA/grounding-merging/blob/master/README.md)
+- [Data Download](https://drive.google.com/open?id=1JQak5s31I4nwGNASpOQ_GbQpJuS85lFr)
+- Data Structure
+```
+columbia_data_root
+├── columbia_vision_shared
+│   ├── cu_objdet_results
+│   ├── cu_grounding_matching_features
+│   ├── cu_grounding_results
+│   ├── uiuc_ttl_results
+│   ├── uiuc_asr_files
+│   ├── cu_grounding_dict_files
+│   ├── cu_ttl_tmp
+│   ├── cu_graph_merging_ttl
+│   └── ...
+├── columbia_object_detection_models
+├── columbia_recognition_models
+└── columbia_visual_grounding_models
 ```
 
-Example files are in `gaia_text_ie_m18/data/testdata`.
+### Object Detection
+- Task: Object Detection
+- Source: https://github.com/GAIA-AIDA/object-detection
+- Dependencies: 
+  * `path/to/columbia_data_root/columbia_object_detection_models/*`
+- Input: 
+  * `/path/to/ldc/corpus/data/jpg/jpg/*.jpg[.ldcc]`
+  * `/path/to/ldc/corpus/data/video_shot_boundaries/representative_frames/*/*.png[.ldcc]`
+  * `/path/to/ldc/corpus/docs/masterShotBoundary.msb`
+  * `/path/to/ldc/corpus/docs/parent_children.sorted.tab`
+- Output:
+  * `/root/output/aida_output_34.pkl`
+  * `/root/output/det_results_merged_34a.pkl`
+  * `/root/output/det_results_merged_34b.pkl`
 
-### Visual Entity Extraction
+- Consumer: CU Face, Flag, Landmark Detection, CU Visual Grounding, and CU Visual Grounding Dictionaries
 
-```
-python gaia_object_detection-master/tfobjdetect/ipynb/deployment/deploy_037a(b/c/d/e)
-python gaia_object_detection-master/wsod/ipynb/deploy/dpl_034a(b)
-python gaia_object_detection-master/model_fusion/ipynb/fusion/fuse_034a(b)
-python gaia_object_detection-master/model_fusion/ipynb/export/ex_034
-```
-
-### Visual Entity Linking and Coreference
-
-```
-python gaia_face_building-master/src/align/align_dataset_mtcnn.py \
-[input directory of img or key frames] \
-datasets/[output dir] \
---image_size 160 \
---margin 32
-
-python gaia_face_building-master/src/classifier.py CLASSIFY \ 
-datasets/[1.1 output directory] \
-models/facenet/20180402-114759/20180402-114759.pb \
-models/google500_2_classifier.pkl \
-[result pickle file name] \
---batch_size 1000 > results/[result txt file name].txt
-
-python gaia_face_building-master/src/bbox.py [1.1 output directory] [bbox pickle name]
-
-python gaia_face_building-master/extract_features.py \
-  --config_path delf_config_example.pbtxt \
-  --list_images_path [path to the building_list.txt created by obj_preprocess.ipynb] /building_list.txt \
-  --output_dir [output feature directory]
-  
-python gaia_face_building-master/match2.py [output feature directory from 2.3.1] [output result pickle name]
-```
-
-### Cross-media Fusion
-
-This step synthesises the knowledge from text, images, and videos to construct a comprehensive multimedia knowledge base. The crossmedia fusion is done by grouding text to visual regions and the results of entity linking. Runing following steps for crossmedia fusion: 
+- To build and run the system:
 
 ```
-Visual_Features.ipynb
-Grounding.ipynb
-Merge.ipynb
+$ INPUT=/path/to/ldc/corpus
+$ OUTPUT=/path/to/output/directory
+$ GPU_ID=[a single integer index to the GPU]
+
+$ chmod +x ./full_script.sh
+$ docker build . --tag [TAG]
+$ CONTAINER_ID=`docker run -itd -v ${INPUT}:/root/input:ro -v ${OUTPUT}:/root/output \
+                -e CUDA_VISIBLE_DEVICES=${GPU_ID} --gpus=${GPU_ID} --name aida-cu-od [TAG] /bin/bash`
+$ docker exec -it ${CONTAINER_ID} /bin/bash
+
+$ sh ./full_script.sh 
 ```
 
+If `/path/to/columbia_data_root/columbia_vision_shared/aida_output_34.pkl` (and two other files) exists, it means the system has run successfully.
+
+Optionally, you may mount `CORPUS`, `OUTPUT`, and/or `MODELS` on different paths, in which case you should pass the new paths to `docker run` using `-e CORPUS=/new/corpus/path`, etc.
+
+
+### Face, Flag, Landmark Detection
+- Task: Detection and recognition for face, flag, and landmark.
+- Source: https://github.com/GAIA-AIDA/face-building
+- Input: LDC2019E42 unpacked data, Columbia object detection, UIUC text output.
+```
+# Initialization
+corpus_path = LDC2019E42
+working_path = shared + 'cu_FFL_shared/'
+model_path = models + 'cu_FFL_models/'
+Lorelei = 'LDC2018E80_LORELEI_Background_KB/data/entities.tab'
+
+# Input Paths
+# Source corpus data paths
+parent_child_tab = corpus_path + 'docs/parent_children.sorted.tab'
+kfrm_msb = corpus_path + 'docs/masterShotBoundary.msb'
+kfrm_ldcc = corpus_path + 'data/video_shot_boundaries/representative_frames/'
+jpg_ldcc = corpus_path + 'data/jpg/jpg/' 
+jpg_path = working_path + 'jpg/jpg/'
+kfrm_path = working_path + 'video_shot_boundaries/representative_frames/'
+ltf_path = corpus_path + 'data/ltf/ltf/'
+
+#UIUC text mention result paths
+txt_mention_ttl_path = working_path + 'uiuc_ttl_results/' + version_folder + uiuc_run_folder # 1/7th May
+
+# CU object detection result paths
+det_results_path_graph = working_path + 'cu_objdet_results/' + version_folder + 'aida_output_34.pkl'
+det_results_path_img = working_path + 'cu_objdet_results/' + version_folder + 'det_results_merged_34a.pkl'
+det_results_path_kfrm = working_path + 'cu_objdet_results/' + version_folder + 'det_results_merged_34b.pkl'
+
+# Model Paths
+face_model_path = model_path + 'models/'
+
+# Face detection and recognition
+face_det_jpg = working_path+'face_det_jpg'
+face_det_kf = working_path+'face_det_kf'
+face_class_jpg = working_path+'face_class_jpg'
+face_class_kf = working_path+'face_class_kf'
+obj_det_results = working_path+'obj_det'
+
+bbox_jpg = working_path+'bbox_jpg'
+bbox_kf = working_path+'bbox_kf'
+
+#Flag
+flag_det_results = working_path+'flag_det'
+flag_class_results = working_path+'flag_m18_2'
+
+#Landmark
+landmark_results = working_path+'building_result'
+
+#RPI_result
+RPI_entity_out = working_path+'txt_mention_out'
+```
+- Output: CU object detection, CU Face, Flag, Landmark Detection ttl files
+```
+# Output Paths
+out_ttl = working_path + 'cu_object_FFT_ttl/' 
+```
+- Consumer: To CU Graph Merging.
+Docker
+
+```
+$ INPUT= /host_input/
+$ OUTPUT=/host_output/
+$ GPU_ID=[a single integer index to the GPU]
+
+docker run --gpus 8 -it -v /dvmm-filer2/projects/AIDA/data/ldc_eval_m18/LDC2019E42_AIDA_Phase_1_Evaluation_Source_Data_V1.0:/aida/src/m18_data -v /dvmm-filer2/projects/AIDA/data/columbia_data_root:/aida/src/columbia_data_root -e CUDA_VISIBLE_DEVICES=${GPU_ID} brian271828/brian_aida:0511
+
+docker run --gpus 8 -it -v /dvmm-filer2/projects/AIDA/data/ldc_eval_m18/LDC2019E42_AIDA_Phase_1_Evaluation_Source_Data_V1.0:/aida/src/m18_data -v /dvmm-filer2/projects/AIDA/data/columbia_data_root/columbia_vision_shared:/output -e CUDA_VISIBLE_DEVICES=0 brian271828/brian_aida:0701
+
+
+$ chmod +x ./full_script.sh
+$ docker build . --tag [TAG]
+$ CONTAINER_ID=`docker run --gpus ${GPU_ID} -it -v ${INPUT}:/aida/src/m18_data -v ${OUTPUT}/WORKING/columbia_vision_shared:/output --name aida-cu-fd [TAG] /bin/bash`
+$ docker exec -it ${CONTAINER_ID} /bin/bash
+
+$ sh ./full_script.sh 
+
+```
+
+### Visual Grounding
+- Task: Visual Grounding Results Generation
+- Source: https://github.com/GAIA-AIDA/grounding-merging
+- Version Setting
+```
+# Set evaluation version as the prefix folder
+version_folder = 'E/'
+# Set run version as prefix and uiuc_run_folder
+p_f_run = 'E1' # E5
+uiuc_run_folder = 'RPI_TA1_E1/'
+```
+- Input: LDC2019E42 unpacked data, CU visual grounding and instance matching models, UIUC text mention results, CU object detection results
+```
+# Initialization
+corpus_path = '/root/LDC/' # '/LDC2019E42/'
+working_path = '/root/shared/' # '/columbia_data_root/columbia_vision_shared/'
+model_path = '/root/models/ # '/columbia_data_root/columbia_visual_grounding_models/'
+
+# Input Paths
+# Source corpus data paths
+parent_child_tab = corpus_path + 'docs/parent_children.sorted.tab'
+kfrm_msb = corpus_path + 'docs/masterShotBoundary.msb'
+kfrm_path = corpus_path + 'data/video_shot_boundaries/representative_frames'
+jpg_path = corpus_path + 'data/jpg/jpg/'
+ltf_path = corpus_path + 'data/ltf/ltf/'
+
+#UIUC text mention result paths
+txt_mention_ttl_path = working_path + 'uiuc_ttl_results/' + version_folder + uiuc_run_folder # 1/7th May
+pronouns_path = working_path + 'uiuc_asr_files/' + 'pronouns.txt'
+video_asr_path = working_path + 'uiuc_asr_files/' + version_folder +'ltf_asr/'
+video_map_path = working_path + 'uiuc_asr_files/' + version_folder +'map_asr/'
+
+# CU object detection result paths
+det_results_path_img = working_path + 'cu_objdet_results/' + version_folder + 'det_results_merged_34a.pkl'
+det_results_path_kfrm = working_path + 'cu_objdet_results/' + version_folder + 'det_results_merged_34b.pkl'
+
+# Model Paths
+# CU visual grounding and instance matching moodel paths
+grounding_model_path = model_path + 'model_ELMo_PNASNET_VOA_norm'
+matching_model_path = model_path + 'model_universal_no_recons_ins_only'
+```
+- Output: CU visual grounding and instance matching features
+```
+# Output Paths
+# CU visual grounding feature paths
+out_path_jpg = working_path + 'cu_grounding_matching_features/' + 'semantic_features_jpg.lmdb'
+out_path_kfrm = working_path + 'cu_grounding_matching_features/' + 'semantic_features_keyframe.lmdb'
+
+# CU instance matching feature paths
+out_path_jpg = working_path + 'cu_grounding_matching_features/' + 'instance_features_jpg.lmdb'
+out_path_kfrm = working_path + 'cu_grounding_matching_features/' + 'instance_features_keyframe.lmdb'
+
+# CU Visual grounding result paths
+grounding_dict_path = working_path + 'cu_grounding_results/' + version_folder + '/grounding_dict_'+p_f_run+'.pickle'
+grounding_log_path = working_path + 'cu_grounding_results/' + version_folder + '/log_grounding_'+p_f_run+'.txt'
+```
+- Consumer: To CU Graph Merging, To CU face/flag/landmark Detection
+```
+$ INPUT= /host_input/
+$ OUTPUT=/host_output/
+$ # please create the folder /columbia_vision_shared/ under the ${OUTPUT}/WORKING/ directory for output files
+$ mkdir  ${OUTPUT}/WORKING/columbia_vision_shared/
+$ # please run the necessary modules (CU_Object_Detection, CU_Face/Flag/Landmark_Recognition and UIUC_Text_Pipeline) to get or download the the required result files to the shared directory: ${OUTPUT}/WORKING/columbia_vision_shared/
+$ GPU_ID=[a single integer index to the GPU]
+
+$ docker pull dannapierskitoptal/aida-grounding-merging:latest
+$ docker run -itd -e CUDA_VISIBLE_DEVICES=${GPU_ID} --gpus ${GPU_ID} --name aida-gm -v columbia_visual_grounding_models/:/root/models -v ${INPUT}:/root/LDC:ro -v ${OUTPUT}/WORKING/columbia_vision_shared/:/root/shared aida-grounding-merging /bin/bash
+$ docker exec -it aida-gm /bin/bash
+# # python smoke_test.py
+# python Feature_Extraction.py
+# python Visual_Grounding_mp.py
+```
+
+### Visual Grounding Dictionaries
+- Task: Intermediate Dictionaries Generation for extracted mentions
+- Source: https://github.com/GAIA-AIDA/grounding-merging
+- Version Setting
+```
+# Set evaluation version as the prefix folder
+version_folder = 'E/'
+# Set run version as prefix and uiuc_run_folder
+p_f_run = 'E1' # E5
+```
+- Input: LDC2019E42 unpacked data, UIUC text mention results
+```
+# Initialization
+corpus_path = '/root/LDC/' # '/LDC2019E42/'
+working_path = '/root/shared/' # '/columbia_data_root/columbia_vision_shared/'
+
+# Input Paths
+# Source corpus data paths
+parent_child_tab = corpus_path + 'docs/parent_children.sorted.tab'
+kfrm_msb = corpus_path + 'docs/masterShotBoundary.msb'
+kfrm_path = corpus_path + 'data/video_shot_boundaries/representative_frames'
+jpg_path = corpus_path + 'data/jpg/jpg/'
+ltf_path = corpus_path + 'data/ltf/ltf/'
+
+#UIUC text mention result paths
+txt_mention_ttl_path = working_path + 'uiuc_ttl_results/' + version_folder + uiuc_run_folder # 1/7th May
+pronouns_path = working_path + 'uiuc_asr_files/' + 'pronouns.txt'
+video_asr_path = working_path + 'uiuc_asr_files/' + version_folder +'ltf_asr/'
+video_map_path = working_path + 'uiuc_asr_files/' + version_folder +'map_asr/'
+```
+- Output: CU visual grounding dict files
+```
+# CU visual grounding dict files for USC
+entity2mention_dict_path = working_path + 'cu_grounding_dict_files/' + version_folder + 'entity2mention_dict_'+p_f_run+'.pickle'
+id2mentions_dict_path = working_path + 'cu_grounding_dict_files/' + version_folder + 'id2mentions_dict_'+p_f_run+'.pickle'
+```
+- Consumer: To USC Grounding
+```
+# python Feature_Extraction.py
+# python Visual_Grounding_mp.py (before line 256)
+```
+
+### USC Grounding
+- Task: Grounding the extracted entities provided by Columbia
+- Source: https://github.com/isi-vista/aida_detect_ground
+- Input: Intermediate files prepared by Columbia, file paths are: `/upload/USC_Vision_Data/CU_dicts/evaluation/To_USC_{E1/E2}.tar.gz`
+- Output: Our grounding result can be found here: `/upload/USC_Vision_Data/m18_eval/m18_usc_vision_grnd_output/uscvision_grounding_output_cu_format_{E1/E2}.pickle`
+- Output is located at `/upload/USC_Vision_Data/m18_eval/m18_usc_vision_grnd_output_TA1b`. There are 6 files and also a .tar.gz file if you want to download them all at once.
+```
+$ docker build . --tag usc-dg
+$ docker run -itd --ipc=host --gpus=${AVAILABLE_GPU} --name aida-dg -v ${shared}/usc:/aida/src/data/aida_m18_eval/m18_eval/data_converted usc-dg /bin/bash
+$ docker exec -it aida-dg /bin/bash
+(aida-env) root@abcd:/aida/src# python ./code/smoke_test.py
+begin smoke test
+end smoke test
+...
+(aida_env) root@abcd:/aida/src# python ./code/columbia_idmentions_2_phrase_file.py --fin1=False
+...
+(aida-env) root@abcd:/aida/src# python ./code/ground_naive.py
+...
+(aida_env) root@abcd:/aida/src# python ./code/columbia_idmentions_2_phrase_file.py --fin1=True
+TODO: copy files out
+```
+
+### Visual Graph Merging 
+- Task: Results Merging from CU, UIUC and USC for M18 Evaluation
+- Source: https://github.com/GAIA-AIDA/grounding-merging
+- Version Setting
+```
+# Set evaluation version as the prefix folder
+version_folder = 'E/'
+# Set run version as prefix and uiuc_run_folder
+p_f_run = 'E1' # E5
+uiuc_run_folder = 'RPI_TA1_E1/'
+# Set the number of multiple processes
+processes_num = 32
+```
+- Input: LDC2019E42 unpacked data, CU visual grounding and all detection results, UIUC text mention results, USC grounding results
+```
+# Initialization
+corpus_path = '/root/LDC/' # '/LDC2019E42/'
+working_path = '/root/shared/' # '/columbia_data_root/columbia_vision_shared/'
+
+# Input Paths
+# Source corpus data paths
+parent_child_tab = corpus_path + 'docs/parent_children.sorted.tab'
+
+# CU visual grounding feature paths
+out_path_jpg = working_path + 'cu_grounding_matching_features/' + 'semantic_features_jpg.lmdb'
+out_path_kfrm = working_path + 'cu_grounding_matching_features/' + 'semantic_features_keyframe.lmdb'
+
+# CU instance matching feature paths
+out_path_jpg = working_path + 'cu_grounding_matching_features/' + 'instance_features_jpg.lmdb'
+out_path_kfrm = working_path + 'cu_grounding_matching_features/' + 'instance_features_keyframe.lmdb'
+
+# CU visual grounding result path
+grounding_dict_path = working_path + 'cu_grounding_results/' + version_folder + 'grounding_dict_'+p_f_run+'.pickle'
+
+# CU temporal ttl results
+cu_ttl_tmp_path = working_path + 'cu_ttl_tmp/'
+cu_ttl_path = cu_ttl_tmp_path + version_folder + 'm18_' + p_f_run + '/'
+cu_ttl_ins_path = cu_ttl_tmp_path + version_folder + 'm18_i_c_' + p_f_run + '/'
+
+#UIUC text mention result paths
+txt_mention_ttl_path = working_path + 'uiuc_ttl_results/' + version_folder + uiuc_run_folder
+
+# USC visual grounding result path for merging
+usc_dict_path = working_path + 'usc_grounding_dict/' + version_folder + 'uscvision_grounding_output_cu_format_' + p_f_run + '.pickle' 
+```
+- Output: CU graph merging results
+```
+# CU graph merging result path
+merged_graph_path = working_path + 'cu_graph_merging_ttl/' + version_folder + 'merged_ttl_'+ p_f_run + '/'
+```
+- Consumer: To UIUC Merging
+```
+$ INPUT= /host_input/
+$ OUTPUT=/host_output/
+$ # please create the folder /columbia_vision_shared/ under the ${OUTPUT}/WORKING/ directory for output files
+$ mkdir  ${OUTPUT}/WORKING/columbia_vision_shared/
+$ # please run the necessary modules (CU_Object_Detection, CU_Face/Flag/Landmark_Recognition and UIUC_Text_Pipeline) to get or download the the required result files to the shared directory: ${OUTPUT}/WORKING/columbia_vision_shared/
+$ GPU_ID=[a single integer index to the GPU]
+
+$ docker pull dannapierskitoptal/aida-grounding-merging:latest
+$ docker run -itd -e CUDA_VISIBLE_DEVICES=${GPU_ID} --gpus ${GPU_ID} --name aida-gm -v columbia_visual_grounding_models/:/root/models -v ${INPUT}:/root/LDC:ro -v ${OUTPUT}/WORKING/columbia_vision_shared/:/root/shared aida-grounding-merging /bin/bash
+$ docker exec -it aida-gm /bin/bash
+# python smoke_test.py
+# python Graph_Merging.py
+# TODO: copy files out.
+```
+
+
+### Text and Visual IE Result Merging
+- Task: Final merge of TA1
+- Details here: https://github.com/isi-vista/aida-tools#cleaning-kbs-cleankb-jvm
+- Input: (1) merged KB from `CU Graph Merging` 
+- Output: final ttl
+```
+## construct params files
+echo "parentChildMapFilenames: /aida-tools-master/sample_params/m18-eval/"${parent_child_tab_path} > ${data_root_result}/uiuc_clean_normal_params
+echo "masterShotTable: /aida-tools-master/sample_params/m18-eval/"${masterShotTable_path} >> ${data_root_result}/uiuc_clean_normal_params
+echo "sourceDir: /aida-tools-master/sample_params/m18-eval/"${preprocessed_source_dir_from_uiuc} >> ${data_root_result}/uiuc_clean_normal_params
+echo "sampledOcrDir: /aida-tools-master/sample_params/m18-eval/"${ocr_path_from_OCR} >> ${data_root_result}/uiuc_clean_normal_params
+echo "INCLUDE m18_cleaning.common.params" >> ${data_root_result}/uiuc_clean_normal_params
+echo "kbsToRead: /aida-tools-master/sample_params/m18-eval/"${all_merged_ttl} >> ${data_root_result}/uiuc_clean_normal_params
+echo "baseOutputDir: /aida-tools-master/sample_params/m18-eval/"${final_ttl} >> ${data_root_result}/uiuc_clean_normal_params
+echo "variantNum: 1" >> ${data_root_result}/uiuc_clean_normal_params
+echo "suppressValidation: true" >> ${data_root_result}/uiuc_clean_normal_params
+## run docker
+docker run --rm -v ${PWD}:/aida-tools-master/sample_params/m18-eval -w /aida-tools-master -i -t limanling/aida-tools \
+    /aida-tools-master/aida-eval-tools/target/appassembler/bin/cleanKB  \
+    sample_params/m18-eval/${data_root_result}/uiuc_clean_normal_params
+```
