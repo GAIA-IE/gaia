@@ -1,5 +1,7 @@
 # GAIA: A Cross-media Fine-grained Knowledge Extraction System
 
+This is the code for [GAIA: A Cross-media Fine-grained Knowledge Extraction System](http://blender.cs.illinois.edu/software/gaia-ie/) ([Paper](https://blender.cs.illinois.edu/paper/aidaacl2020demo.pdf)). 
+
 Table of Contents
 =================
   * [Overview](#overview)
